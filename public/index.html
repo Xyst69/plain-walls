@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Plain Walls — Minimalist Laminated Art & Prints</title>
+  <meta name="description" content="A curated collection of quiet, laminated posters and framed prints designed to bring architectural stillness to everyday spaces.">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+  <!-- Minimal Editorial Navigation -->
+  <header class="site-header">
+    <div class="container">
+      <nav class="site-nav" aria-label="Main Navigation">
+        <a href="./index.html" class="brand-logo" id="brandLogo">Plain Walls</a>
+        <ul class="nav-links">
+          <li><a href="./shop.html" class="nav-link" id="navShop">Collection</a></li>
+          <li><a href="./about.html" class="nav-link" id="navAbout">Studio & Notes</a></li>
+          <li>
+            <a href="./cart.html" class="nav-link" id="navCart">
+              Cart <span class="cart-count-badge" id="cartCountBadge">(0)</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Editorial Hero Section -->
+    <section class="hero-section">
+      <div class="container">
+        <div class="hero-layout">
+          <div class="hero-image-wrap">
+            <img 
+              src="./images/hero-editorial-interior.jpg" 
+              alt="Framed minimalist art print hung in a quiet, sunlit interior with neutral tones" 
+              class="hero-image"
+              loading="eager"
+            />
+          </div>
+          <div class="hero-copy">
+            <span class="label-caps">Print Workshop & Curated Editions</span>
+            <h1 class="hero-title">Quiet forms for living spaces.</h1>
+            <p class="hero-description">
+              We design and produce archival prints sealed in subtle thermal lamination. Resilient, non-reflective, and made to outlive passing trends.
+            </p>
+            <div class="hero-actions">
+              <a href="./shop.html" class="btn btn-primary" id="heroShopBtn">Browse Collection</a>
+              <a href="./about.html" class="btn btn-outline" id="heroAboutBtn">Our Process</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Curated Featured Prints Grid -->
+    <section class="featured-section">
+      <div class="container">
+        <div class="section-header">
+          <div>
+            <span class="label-caps">Featured Edition</span>
+            <h2 class="section-title">Selected Works</h2>
+          </div>
+          <a href="./shop.html" class="btn-text" id="viewAllPrintsLink">View All Prints →</a>
+        </div>
+
+        <div class="poster-grid" id="featuredGrid">
+          <!-- Dynamically populated by home.js via GET /api/posters?featured=true -->
+        </div>
+      </div>
+    </section>
+
+    <!-- Process: How It's Made Strip -->
+    <section class="process-section">
+      <div class="container">
+        <div class="process-header">
+          <span class="label-caps">Methodology</span>
+          <h2 style="font-size: 2rem; margin-top: 4px;">How Each Piece Is Made</h2>
+        </div>
+        <div class="process-grid">
+          <div class="process-step">
+            <span class="process-step-num">01 / PRINT</span>
+            <h3 class="process-step-title">300gsm Archival Stock</h3>
+            <p class="process-step-desc">
+              Giclée reproduction utilizing mineral-based pigment inks for deep blacks, smooth tonal gradations, and enduring lightfastness.
+            </p>
+          </div>
+          <div class="process-step">
+            <span class="process-step-num">02 / LAMINATE</span>
+            <h3 class="process-step-title">Thermal Protective Seal</h3>
+            <p class="process-step-desc">
+              Every print is thermally sealed in a velvet matte or satin lamination layer, guarding against fingerprints, moisture, and UV fade without heavy glass glare.
+            </p>
+          </div>
+          <div class="process-step">
+            <span class="process-step-num">03 / DELIVER</span>
+            <h3 class="process-step-title">Rigid Tube Dispatch</h3>
+            <p class="process-step-desc">
+              Hand-rolled in acid-free tissue paper and shipped in heavy-gauge zero-crush cylinders with complimentary tracking nationwide.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Editorial Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h3 class="footer-brand-title">Plain Walls</h3>
+          <p class="footer-desc">
+            An independent print studio focused on restraint, balanced proportions, and tactile paper goods for calm interiors.
+          </p>
+        </div>
+        <div>
+          <div class="footer-col-title">Navigation</div>
+          <ul class="footer-list">
+            <li><a href="./shop.html">Full Catalog</a></li>
+            <li><a href="./about.html">Studio & Craft</a></li>
+            <li><a href="./cart.html">Shopping Cart</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Workshop</div>
+          <p style="font-size: 0.8125rem; color: var(--text-muted); line-height: 1.6;">
+            Fort Art District, Mumbai<br>
+            Dispatched across India<br>
+            Mon – Fri, 10:00 – 18:00 IST
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Plain Walls Print Workshop. All rights reserved.</span>
+        <span>Built with Node.js, Express & MongoDB</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./js/api.js"></script>
+  <script src="./js/home.js"></script>
+</body>
+</html>

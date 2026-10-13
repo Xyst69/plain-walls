@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Print Details — Plain Walls</title>
+  <meta name="description" content="View individual print specifications, archival dimensions, custom lamination finish, and pricing.">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="site-header">
+    <div class="container">
+      <nav class="site-nav" aria-label="Main Navigation">
+        <a href="./index.html" class="brand-logo" id="brandLogo">Plain Walls</a>
+        <ul class="nav-links">
+          <li><a href="./shop.html" class="nav-link" id="navShop">Collection</a></li>
+          <li><a href="./about.html" class="nav-link" id="navAbout">Studio & Notes</a></li>
+          <li>
+            <a href="./cart.html" class="nav-link" id="navCart">
+              Cart <span class="cart-count-badge" id="cartCountBadge">(0)</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="product-detail-section">
+      <div class="container" id="posterDetailContainer">
+        <!-- Rendered dynamically by poster.js via GET /api/posters/:slug -->
+        <div style="padding: 4rem 0; text-align: center; color: var(--text-muted);">
+          Loading print specifications...
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h3 class="footer-brand-title">Plain Walls</h3>
+          <p class="footer-desc">
+            Tactile, laminated home decor prints designed to bring quiet beauty to modern spaces.
+          </p>
+        </div>
+        <div>
+          <div class="footer-col-title">Navigation</div>
+          <ul class="footer-list">
+            <li><a href="./shop.html">Collection</a></li>
+            <li><a href="./about.html">Studio Craft</a></li>
+            <li><a href="./cart.html">View Cart</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Custom Inquiries</div>
+          <p style="font-size: 0.8125rem; color: var(--text-muted); line-height: 1.6;">
+            Architectural and gallery enquiries:<br>
+            orders@plainwalls.com
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Plain Walls. Handcrafted print editions.</span>
+        <span>Standard domestic delivery included</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./js/api.js"></script>
+  <script src="./js/poster.js"></script>
+</body>
+</html>

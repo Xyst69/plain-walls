@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Collection — Plain Walls Gallery Prints</title>
+  <meta name="description" content="Browse our catalog of minimalist art prints, botanical studies, architectural compositions, and line art with thermal protective lamination.">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="site-header">
+    <div class="container">
+      <nav class="site-nav" aria-label="Main Navigation">
+        <a href="./index.html" class="brand-logo" id="brandLogo">Plain Walls</a>
+        <ul class="nav-links">
+          <li><a href="./shop.html" class="nav-link active" id="navShop">Collection</a></li>
+          <li><a href="./about.html" class="nav-link" id="navAbout">Studio & Notes</a></li>
+          <li>
+            <a href="./cart.html" class="nav-link" id="navCart">
+              Cart <span class="cart-count-badge" id="cartCountBadge">(0)</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Catalog Header & Controls -->
+    <section class="shop-header">
+      <div class="container">
+        <span class="label-caps">The Catalog</span>
+        <h1 style="font-size: 2.75rem; margin-top: 4px;">Gallery Collection</h1>
+        <p style="color: var(--text-muted); font-size: 0.9375rem; max-width: 520px; margin-top: 6px;">
+          Filter by aesthetic category, search titles and motifs, or sort by pricing. Each print is custom-produced upon order.
+        </p>
+
+        <div class="shop-controls">
+          <!-- Category Filter Buttons -->
+          <ul class="category-filter-list" id="categoryFilters">
+            <li><button type="button" class="filter-btn active" data-category="All" id="filterAll">All</button></li>
+            <li><button type="button" class="filter-btn" data-category="Abstract" id="filterAbstract">Abstract</button></li>
+            <li><button type="button" class="filter-btn" data-category="Botanical" id="filterBotanical">Botanical</button></li>
+            <li><button type="button" class="filter-btn" data-category="Typography" id="filterTypography">Typography</button></li>
+            <li><button type="button" class="filter-btn" data-category="Architecture" id="filterArchitecture">Architecture</button></li>
+            <li><button type="button" class="filter-btn" data-category="Landscape" id="filterLandscape">Landscape</button></li>
+            <li><button type="button" class="filter-btn" data-category="Line Art" id="filterLineArt">Line Art</button></li>
+          </ul>
+
+          <!-- Search & Sort Controls -->
+          <div class="search-sort-group">
+            <div class="search-input-wrap">
+              <input 
+                type="text" 
+                id="searchInput" 
+                class="search-input" 
+                placeholder="Search prints..." 
+                aria-label="Search prints" 
+              />
+            </div>
+
+            <select id="sortSelect" class="sort-select" aria-label="Sort collection">
+              <option value="newest">Sort: Newest</option>
+              <option value="price_asc">Price: Low to High</option>
+              <option value="price_desc">Price: High to Low</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="results-info" id="resultsCount">Loading prints...</div>
+      </div>
+    </section>
+
+    <!-- Poster Grid -->
+    <section style="padding: var(--space-xl) 0 var(--space-3xl);">
+      <div class="container">
+        <div class="poster-grid" id="shopGrid">
+          <!-- Dynamically populated by shop.js via GET /api/posters -->
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h3 class="footer-brand-title">Plain Walls</h3>
+          <p class="footer-desc">
+            Archival prints sealed in protective matte or satin lamination for enduring clarity.
+          </p>
+        </div>
+        <div>
+          <div class="footer-col-title">Navigation</div>
+          <ul class="footer-list">
+            <li><a href="./shop.html">Collection</a></li>
+            <li><a href="./about.html">Studio Notes</a></li>
+            <li><a href="./cart.html">Cart</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Contact</div>
+          <p style="font-size: 0.8125rem; color: var(--text-muted); line-height: 1.6;">
+            Enquiries: studio@plainwalls.com<br>
+            Standard dispatch: 48 business hours
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Plain Walls. Curated print workshop.</span>
+        <span>All sizes: A4, A3, A2 available</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./js/api.js"></script>
+  <script src="./js/shop.js"></script>
+</body>
+</html>

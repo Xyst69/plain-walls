@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio & Notes — Plain Walls</title>
+  <meta name="description" content="Learn about our small print studio, archival lamination process, framing advice, and photographer credits.">
+  <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+
+  <!-- Navigation -->
+  <header class="site-header">
+    <div class="container">
+      <nav class="site-nav" aria-label="Main Navigation">
+        <a href="./index.html" class="brand-logo" id="brandLogo">Plain Walls</a>
+        <ul class="nav-links">
+          <li><a href="./shop.html" class="nav-link" id="navShop">Collection</a></li>
+          <li><a href="./about.html" class="nav-link active" id="navAbout">Studio & Notes</a></li>
+          <li>
+            <a href="./cart.html" class="nav-link" id="navCart">
+              Cart <span class="cart-count-badge" id="cartCountBadge">(0)</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="about-section">
+      <div class="container">
+        <div class="about-editorial-grid">
+          <!-- Left Column: Story & Process -->
+          <div>
+            <span class="label-caps">About The Studio</span>
+            <h1 class="about-heading">Stillness on paper.</h1>
+
+            <div class="about-body">
+              <p>
+                Plain Walls was founded as an antidote to noisy home decor. We believe walls do not need high-frequency stimulation; they need balance, proportional breathing room, and subdued natural palettes that age gracefully with sunlight.
+              </p>
+
+              <h2 style="font-size: 1.75rem; margin-top: 2rem; margin-bottom: 0.5rem;">Why Thermal Lamination?</h2>
+              <p>
+                Traditional framed prints require fragile glass panes that reflect distracting glare and add unnecessary weight. We seal every print using a micro-thin thermal lamination film.
+              </p>
+              <p>
+                This treatment creates a wipe-clean surface impervious to ambient humidity, UV light, and fingerprints while preserving deep paper texture. Hang them directly with wooden hanger bars, clipboards, or inset them into glassless frames.
+              </p>
+
+              <h2 style="font-size: 1.75rem; margin-top: 2rem; margin-bottom: 0.5rem;">Dimensions Guide</h2>
+              <p>
+                <strong>A4 (21.0 × 29.7 cm)</strong> — Suitable for compact reading desks, vanity corners, and layered gallery shelf displays.<br>
+                <strong>A3 (29.7 × 42.0 cm)</strong> — Balanced proportions for bedrooms, studio studies, and paired arrangements.<br>
+                <strong>A2 (42.0 × 59.4 cm)</strong> — Command piece for dining credenzas, sofa walls, and high-ceiling hallways.
+              </p>
+            </div>
+          </div>
+
+          <!-- Right Column: Studio Contact & Photography Credits -->
+          <div>
+            <!-- Contact Card -->
+            <div style="background-color: var(--bg-subtle); border: 1px solid var(--border); padding: var(--space-lg); margin-bottom: var(--space-2xl);">
+              <span class="label-caps">Enquiries & Custom Orders</span>
+              <h3 style="font-size: 1.65rem; margin-top: 4px; margin-bottom: 12px;">Get in Touch</h3>
+              <p style="font-size: 0.875rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+                We work directly with homeowners, interior architects, and hospitality studios on curated gallery arrangements and custom sizes.
+              </p>
+
+              <!-- Live Inquiry Form (Saves directly to MongoDB) -->
+              <form id="studioEnquiryForm" style="margin-bottom: var(--space-md);" novalidate>
+                <div id="enquirySuccessBox" style="display: none; background-color: #EBF5EE; border: 1px solid #C4E3CD; padding: 10px; margin-bottom: 12px; font-size: 0.8125rem; color: #2D6A4F;"></div>
+                <div id="enquiryErrorBox" style="display: none; background-color: #FBF0F0; border: 1px solid #E5C3C3; padding: 10px; margin-bottom: 12px; font-size: 0.8125rem; color: #9A2C2C;"></div>
+
+                <div class="form-group" style="margin-bottom: 10px;">
+                  <label for="enquiryName" class="form-label" style="font-size: 0.75rem;">Your Name *</label>
+                  <input type="text" id="enquiryName" class="form-input" placeholder="e.g. Ananya Rao" required />
+                </div>
+
+                <div class="form-group" style="margin-bottom: 10px;">
+                  <label for="enquiryEmail" class="form-label" style="font-size: 0.75rem;">Email Address *</label>
+                  <input type="email" id="enquiryEmail" class="form-input" placeholder="e.g. ananya@example.com" required />
+                </div>
+
+                <div class="form-group" style="margin-bottom: 10px;">
+                  <label for="enquiryPhone" class="form-label" style="font-size: 0.75rem;">Contact Number</label>
+                  <input type="tel" id="enquiryPhone" class="form-input" placeholder="e.g. +91 98765 43210" />
+                </div>
+
+                <div class="form-group" style="margin-bottom: 12px;">
+                  <label for="enquiryMessage" class="form-label" style="font-size: 0.75rem;">Enquiry / Custom Size Request *</label>
+                  <textarea id="enquiryMessage" class="form-textarea" style="min-height: 80px;" placeholder="Tell us about the space or dimensions you are planning..." required></textarea>
+                </div>
+
+                <button type="submit" id="enquirySubmitBtn" class="btn btn-primary btn-block">
+                  Send Enquiry
+                </button>
+              </form>
+
+              <div style="font-size: 0.8125rem; display: flex; flex-direction: column; gap: 8px; border-top: 1px solid var(--border); padding-top: 14px;">
+                <div><strong>Email:</strong> studio@plainwalls.com</div>
+                <div><strong>Phone / WhatsApp:</strong> +91 (022) 2284-9102</div>
+                <div><strong>Studio:</strong> 34 Ropewalk Lane, Kala Ghoda, Fort, Mumbai 400001</div>
+                <div><strong>Visiting Hours:</strong> Tuesday – Saturday, 11:00 – 17:00 IST</div>
+              </div>
+            </div>
+
+            <!-- Photography Attribution -->
+            <div>
+              <span class="label-caps">Attributions & Gratitude</span>
+              <h3 style="font-size: 1.5rem; margin-top: 4px;">Photographer Credits</h3>
+              <p style="font-size: 0.8125rem; color: var(--text-muted); margin-top: 4px;">
+                Our prints and interior mockups feature imagery by independent photographers under the Unsplash open license:
+              </p>
+
+              <ul class="credit-list">
+                <li class="credit-item">
+                  <span class="credit-photographer">Jonas Jacobsson</span>
+                  <span class="credit-subject">Quiet Arch No. 3</span>
+                </li>
+                <li class="credit-item">
+                  <span class="credit-photographer">Simone Hutsch</span>
+                  <span class="credit-subject">Geometry of Ascend No. 7</span>
+                </li>
+                <li class="credit-item">
+                  <span class="credit-photographer">Federico Respini</span>
+                  <span class="credit-subject">Fern Study No. 12</span>
+                </li>
+                <li class="credit-item">
+                  <span class="credit-photographer">Evie S.</span>
+                  <span class="credit-subject">Olive Branch Monograph</span>
+                </li>
+                <li class="credit-item">
+                  <span class="credit-photographer">Annie Spratt</span>
+                  <span class="credit-subject">Eucalyptus & Shadow</span>
+                </li>
+                <li class="credit-item">
+                  <span class="credit-photographer">Geordanna Cordero</span>
+                  <span class="credit-subject">Ochre & Mineral Forms</span>
+                </li>
+                <li class="credit-item">
+                  <span class="credit-photographer">Europeana</span>
+                  <span class="credit-subject">Monolith in Silence</span>
+                </li>
+                <li class="credit-item">
+                  <span class="credit-photographer">Milad Fakurian</span>
+                  <span class="credit-subject">Terracotta Equilibrium</span>
+                </li>
+                <li class="credit-item">
+                  <span class="credit-photographer">Jeremy Bishop</span>
+                  <span class="credit-subject">Dune Silence</span>
+                </li>
+                <li class="credit-item">
+                  <span class="credit-photographer">Sean Oulashin</span>
+                  <span class="credit-subject">Coastal Horizon No. 4</span>
+                </li>
+                <li class="credit-item">
+                  <span class="credit-photographer">Kalvis Alberts</span>
+                  <span class="credit-subject">Nordic Ridge Study</span>
+                </li>
+                <li class="credit-item">
+                  <span class="credit-photographer">Mika Baumeister</span>
+                  <span class="credit-subject">Form & Void Bauhaus Study</span>
+                </li>
+                <li class="credit-item">
+                  <span class="credit-photographer">Carolin Beck</span>
+                  <span class="credit-subject">Exhibition Pavilion 1923</span>
+                </li>
+                <li class="credit-item">
+                  <span class="credit-photographer">Alina Grubnyak</span>
+                  <span class="credit-subject">Contour Figure No. 2</span>
+                </li>
+                <li class="credit-item">
+                  <span class="credit-photographer">Spacejoy</span>
+                  <span class="credit-subject">Editorial Interior Room</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <h3 class="footer-brand-title">Plain Walls</h3>
+          <p class="footer-desc">
+            A minimalist print studio honoring balance, natural light, and quiet walls.
+          </p>
+        </div>
+        <div>
+          <div class="footer-col-title">Navigation</div>
+          <ul class="footer-list">
+            <li><a href="./shop.html">Collection</a></li>
+            <li><a href="./about.html">Studio & Notes</a></li>
+            <li><a href="./cart.html">Shopping Cart</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Workshop</div>
+          <p style="font-size: 0.8125rem; color: var(--text-muted); line-height: 1.6;">
+            Fort Art District, Mumbai 400001<br>
+            studio@plainwalls.com
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Plain Walls. All rights reserved.</span>
+        <span>Photographer imagery credited and appreciated</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="./js/api.js"></script>
+  <script src="./js/about.js"></script>
+</body>
+</html>
