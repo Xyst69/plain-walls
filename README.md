@@ -1,276 +1,167 @@
-# Plain Walls — Minimalist Gallery Shop
+# NovaMart — Full-Stack Commercial E-Commerce Platform
 
-A full-stack editorial web shop for laminated art posters and framed prints for home decor. Built with a calm gallery aesthetic: lots of whitespace, thin 1px borders, warm off-white tones, and zero generic UI component bloat.
+A production-grade, commercial full-stack e-commerce web platform inspired by **Amazon** and **Flipkart**, built using **Node.js, Express.js, MongoDB (Mongoose ODM), Vanilla Modern CSS, and Vanilla JavaScript**.
 
----
-
-## Table of Contents
-1. [Project Overview](#project-overview)
-2. [Technology Stack](#technology-stack)
-3. [Folder Structure](#folder-structure)
-4. [Database Schemas](#database-schemas)
-5. [Architecture: How Frontend, Backend & MongoDB Connect](#architecture-how-frontend-backend--mongodb-connect)
-6. [API Endpoints](#api-endpoints)
-7. [Installation & Setup](#installation--setup)
-8. [Design Philosophy](#design-philosophy)
-9. [Photography Attributions](#photography-attributions)
+Designed specifically for **academic assignment presentations and live project evaluations**, featuring real-time synchronization with **MongoDB Compass**.
 
 ---
 
-## Project Overview
+## 🌟 Key Features
 
-**Plain Walls** is designed as an antidote to noisy e-commerce templates. Instead of loud badges and gradient banners, the website emulates the quiet atmosphere of a physical art bookshop or independent print workshop in Fort, Mumbai.
+1. **Amazon & Flipkart Grade UI/UX**:
+   - Sticky header with universal search across titles, brands, and categories.
+   - Dynamic location indicator ("Deliver to Mumbai 400001").
+   - Category navigation strip: *Electronics*, *Fashion*, *Home & Kitchen*, *Gaming*, *Today's Deals*.
+   - Hero promotional banner slider for seasonal sales.
+   - **Deal of the Day** ticker card with live countdown clock (`03h : 58m : 40s`).
+   - 4-card quick category exploration grid.
+   - Responsive multi-faceted catalog with filter sidebar (Category facets, Price range bounds, Star rating 4★+).
+   - Commercial product cards with badges (`#1 Bestseller`, `Limited Deal`, `Nova's Choice`, `★ Top Rated`), star ratings, MRP strikethrough, discount percentages, and free delivery markers.
 
-Key features:
-- **Curated Catalog**: 15 distinct prints spanning 6 categories (*Abstract*, *Botanical*, *Typography*, *Architecture*, *Landscape*, *Line Art*).
-- **Dynamic Filtering & Live Search**: Category pills, debounced search, and price/recency sorting powered by MongoDB queries.
-- **Interactive Print Details**: Live size-variant picker (A4, A3, A2) updating prices in real-time with dimensional specifications and finish details.
-- **Client Cart & Server Checkout**: Cart items persisted in `localStorage`, quantity increment/decrement, line totals, and server-validated checkout orders saved to MongoDB.
-- **Protected Admin View**: Simple endpoint to review orders secured with an `ADMIN_KEY` header.
+2. **Interactive Product Details & Variants**:
+   - Full product detail modal with image thumbnail gallery switcher.
+   - Multi-option variant selectors (e.g. Colors, Storage capacities, Shoe sizes).
+   - Technical specifications table (Brand, Model, Battery, Connectivity, Warranty).
+   - Verified customer reviews with star ratings and comments.
+   - "Add to Cart" with fly-to-cart notifications and instant "Buy Now" checkout.
+
+3. **Persistent Cart & Checkout System**:
+   - Cart persisted via `localStorage` across page reloads.
+   - Slide-out shopping cart drawer with quantity stepper (`+`, `-`, `Delete`).
+   - Coupon discount engine: apply `SAVE10` for 10% instant off or `FESTIVE20` for 20% off.
+   - Multi-step checkout form (Full Name, Phone, Email, Address, City, State, Pincode).
+   - Multiple payment methods: Cash on Delivery (COD), UPI QR Code Demo, Credit/Debit Card.
+
+4. **Live MongoDB Database & Compass Integration**:
+   - Orders placed on the website are immediately written as documents to MongoDB in database `ecommerce_db` and collection `orders`.
+   - Inventory stock is dynamically decremented in collection `products`.
+   - Live **MongoDB Compass Inspector** drawer showing connection URI, document counts, and recent orders.
+   - Order tracking page (`/tracking`) to query any order in real time.
 
 ---
 
-## Technology Stack
+## 🛠️ Technology Stack
 
-- **Backend**: Node.js, Express.js
+- **Backend**: Node.js & Express.js
 - **Database**: MongoDB with Mongoose ODM
-- **Frontend**: Server-served semantic HTML5, Vanilla CSS (CSS Custom Properties design system), Vanilla JS (Fetch API)
-- **Configuration**: `dotenv` for environment isolation
+- **GUI Database Client**: MongoDB Compass
+- **Frontend**: Semantic HTML5, Vanilla CSS3 (Custom Properties & Flex/Grid), Vanilla JavaScript (Fetch API & LocalStorage)
+- **Environment**: `dotenv` for configuration
 
 ---
 
-## Folder Structure
+## 🍃 MongoDB Compass Evaluation Guide (For Teachers / Evaluators)
 
-```text
-plain-walls/
-├── server.js                  # Main Express application entry point
-├── .env                       # Local environment variables (ignored by Git)
-├── .env.example               # Template environment configuration
-├── package.json               # Dependencies and npm scripts
-├── config/
-│   └── db.js                  # Mongoose MongoDB connection helper
-├── models/
-│   ├── Poster.js              # Poster schema (slug, sizes, category, finish, price)
-│   └── Order.js               # Order schema (customer, items, total, status)
-├── controllers/
-│   ├── posterController.js    # Poster querying, filtering, search, and lookup logic
-│   └── orderController.js     # Order placement validation and admin retrieval
-├── routes/
-│   ├── posters.js             # Express routes for /api/posters
-│   └── orders.js              # Express routes for /api/orders
-├── seed/
-│   └── seed.js                # Database seeder (clears and inserts 15 posters)
-└── public/
-    ├── index.html             # Home page (editorial hero, featured 6 prints, process strip)
-    ├── shop.html              # Catalog page (category filters, search, sort, grid)
-    ├── poster.html            # Detail page (3:4 ratio view, size selector, finish info)
-    ├── cart.html              # Cart & checkout page (item edit, checkout form, confirmation)
-    ├── about.html             # Studio statement, framing guide, photographer credits
-    ├── css/
-    │   └── style.css          # Design system stylesheet (#F6F4EF, serif/sans typography)
-    ├── js/
-    │   ├── api.js             # Fetch wrappers, cart localStorage helpers, toast notices
-    │   ├── home.js            # Home featured grid loader
-    │   ├── shop.js            # Live search, category filters, catalog rendering
-    │   ├── poster.js          # Detail view, size variant switcher, add to cart
-    │   └── cart.js            # Cart rendering, quantity controls, order form submission
-    └── images/                # High-res, compressed local JPEG images (<300KB each)
-```
+Follow these steps to demonstrate real-time database execution in MongoDB Compass:
+
+### Step 1: Open MongoDB Compass
+1. Launch **MongoDB Compass** on your computer.
+2. In the connection screen, enter:
+   ```text
+   mongodb://localhost:27017
+   ```
+3. Click **Connect**.
+
+### Step 2: Inspect Database & Collections
+1. In the left database panel, look for:
+   ```text
+   ecommerce_db
+   ```
+2. You will see three collections:
+   - `products`: Contains 24 rich products with prices, ratings, and specifications.
+   - `categories`: Contains the 4 main departments.
+   - `orders`: Contains all customer orders.
+
+### Step 3: Live Order Placement Demo
+1. Open the website at `http://localhost:3000`.
+2. Add any product (e.g. *Sony WH-1000XM5 Headphones* or *Nike Air Max Sneakers*) to your cart.
+3. Open the cart drawer, enter coupon `SAVE10`, and click **Proceed to Checkout**.
+4. Fill in demo customer details and click **Place Your Order**.
+5. Note the generated Order ID (e.g. `ORD-2026-XXXXX`).
+6. Switch to **MongoDB Compass**, click the `orders` collection, and press **Refresh**.
+7. **The new order document appears instantly with full customer information, items purchased, and timestamps!**
 
 ---
 
-## Database Schemas
-
-### 1. Poster Schema (`models/Poster.js`)
-```javascript
-{
-  title: String,             // Required, trimmed
-  slug: String,              // Required, unique, lowercase (e.g. "quiet-arch-no-3")
-  description: String,       // Required, editorial product text
-  price: Number,             // Base price in INR (e.g. 699)
-  category: String,          // Enum: ['Abstract', 'Botanical', 'Typography', 'Architecture', 'Landscape', 'Line Art']
-  sizes: [                   // Array of available size variants with custom pricing
-    {
-      label: String,         // Enum: ['A4', 'A3', 'A2']
-      price: Number          // Price in INR for this specific size
-    }
-  ],
-  finish: String,            // Enum: ['matte', 'gloss laminated']
-  imageUrl: String,          // Relative asset path (e.g. "/images/arch-quiet-arch-3.jpg")
-  featured: Boolean,         // Whether print appears on home page featured grid
-  createdAt: Date            // Default: Date.now
-}
-```
-
-### 2. Order Schema (`models/Order.js`)
-```javascript
-{
-  customerName: String,      // Required, min 2 chars
-  email: String,             // Required, valid email format
-  phone: String,             // Required, contact phone number
-  address: String,           // Required, complete shipping address
-  items: [                   // Array of purchased posters
-    {
-      posterId: ObjectId,    // References Poster model
-      title: String,
-      size: String,          // 'A4' | 'A3' | 'A2'
-      quantity: Number,      // Minimum 1
-      price: Number          // Unit price in INR
-    }
-  ],
-  total: Number,             // Verified sum total in INR
-  status: String,            // Enum: ['pending', 'confirmed', 'shipped'], default: 'pending'
-  createdAt: Date            // Default: Date.now
-}
-```
-
----
-
-## Architecture: How Frontend, Backend & MongoDB Connect
-
-```text
-[ Browser / Client ]
-      │
-      ├── 1. Initial Page Request (GET / or GET /shop)
-      │      ───> Express Static Server (`server.js` serves HTML, CSS, JS)
-      │
-      ├── 2. Data Fetch (Vanilla JS `fetch('/api/posters?category=Botanical')`)
-      │      ───> Express Router (`routes/posters.js`)
-      │            ───> Controller (`controllers/posterController.js`)
-      │                  ───> Mongoose Model (`models/Poster.js`)
-      │                        ───> MongoDB Database (`plain_walls`)
-      │      <─── JSON Response (`{ success: true, count: 3, data: [...] }`)
-      │
-      ├── 3. DOM Update (Client-side rendering dynamically creates 3:4 poster cards)
-      │
-      ├── 4. Cart Operations (Stored in client `localStorage`, badge counters synced)
-      │
-      └── 5. Checkout (POST `/api/orders` with customer payload)
-             ───> Server validates inputs and recalculates price integrity
-             ───> Saves document to `orders` collection in MongoDB
-             <─── Status 201 Created with saved Order Reference ID
-```
-
-1. **Client-Side Requests**: When a user opens `/shop.html`, `shop.js` executes and calls `fetchPosters()` in `api.js`.
-2. **Server Middleware**: Express parses query parameters (`req.query.category`, `req.query.search`, `req.query.sort`).
-3. **Database Layer**: Mongoose constructs a sanitized query object (e.g., regex pattern matching for search or case-insensitive category matching) and streams documents from the local MongoDB instance.
-4. **Order Verification**: When placing an order, the backend verifies that item sizes, quantities, and totals are valid before committing the record to MongoDB.
-
----
-
-## API Endpoints
-
-### Posters
-- `GET /api/posters`
-  - Query parameters:
-    - `category`: Filter by category name (e.g. `Botanical`)
-    - `search`: Keyword search matching title or description (e.g. `Arch`)
-    - `sort`: `price_asc` | `price_desc` | `newest` (default)
-    - `featured`: `true` to return featured hero items
-- `GET /api/posters/:slug`
-  - Returns detailed single poster document matching slug.
-
-### Orders
-- `POST /api/orders`
-  - Request Body:
-    ```json
-    {
-      "customerName": "Meera Patel",
-      "email": "meera@example.com",
-      "phone": "+91 98200 12345",
-      "address": "12 Malabar Hill Road, Mumbai 400006",
-      "items": [
-        {
-          "posterId": "6acbdcb9f5612b26f8c63226",
-          "title": "Quiet Arch No. 3",
-          "size": "A3",
-          "quantity": 1,
-          "price": 1199
-        }
-      ]
-    }
-    ```
-  - Response: `201 Created` with generated order ID and summary.
-- `GET /api/orders`
-  - Admin view protected by header `x-admin-key: plainwalls_admin_secret_2026`.
-  - Returns array of all placed orders sorted newest first.
-
----
-
-## Installation & Setup
+## 🚀 Installation & Running
 
 ### 1. Prerequisites
-- **Node.js**: v18.0.0 or later (v24.x recommended)
-- **MongoDB**: Local MongoDB instance running on port `27017` or a MongoDB Atlas connection URI.
+- Node.js (v18+)
+- MongoDB Community Server & MongoDB Compass
 
-### 2. Clone / Open Project
-```bash
-cd "c:\Website folderr"
-```
-
-### 3. Install Dependencies
+### 2. Install Dependencies
 ```bash
 npm install
 ```
 
-### 4. Configure Environment Variables
-Copy `.env.example` to `.env` (or verify `.env` exists):
-```env
-PORT=3000
-MONGO_URI=mongodb://127.0.0.1:27017/plain_walls
-ADMIN_KEY=plainwalls_admin_secret_2026
-```
-
-### 5. Seed Database
-Populate the database with the 15 curated poster products:
+### 3. Seed Database (Populates 24 Products & Sample Orders)
 ```bash
 npm run seed
 ```
-*Output will confirm: `[Seed] Successfully inserted 15 posters across all categories.`*
 
-### 6. Run the Application
-Start the server:
+### 4. Start the Application
 ```bash
 npm start
 ```
-For automatic file reloading during development:
-```bash
-npm run dev
+The server will start at `http://localhost:3000` and automatically connect to MongoDB (`mongodb://127.0.0.1:27017/ecommerce_db`).
+
+Alternatively on Windows, double click `start-website.bat`!
+
+---
+
+## 📡 REST API Reference
+
+| Method | Endpoint | Description |
+|---|---|---|
+| `GET` | `/api/products` | Retrieve products with filtering (`category`, `search`, `minPrice`, `maxPrice`, `minRating`, `sort`) |
+| `GET` | `/api/products/:idOrSlug` | Retrieve product details by MongoDB ID or slug |
+| `GET` | `/api/products/deals/featured` | Retrieve deals of the day and bestsellers |
+| `POST` | `/api/products/:id/reviews` | Submit a customer review and recalculate rating |
+| `GET` | `/api/categories` | Retrieve all categories with live product count |
+| `POST` | `/api/orders` | Place a customer order & save document to MongoDB |
+| `GET` | `/api/orders/:orderNumber` | Lookup order details and live tracking stepper |
+| `GET` | `/api/orders` | Admin endpoint to list recent orders |
+| `GET` | `/api/system/db-status` | Real-time database connection state & Compass metrics |
+
+---
+
+## 📁 Project Structure
+
+```text
+plain-walls/
+├── server.js                  # Primary Express application & Compass status routes
+├── .env                       # MongoDB URI (mongodb://127.0.0.1:27017/ecommerce_db)
+├── .env.example               # Template environment configuration
+├── package.json               # Project metadata & npm scripts
+├── start-website.bat          # 1-click launcher for Windows
+├── config/
+│   └── db.js                  # Resilient Mongoose connection helper
+├── models/
+│   ├── Product.js             # Mongoose schema for products, specs & reviews
+│   ├── Order.js               # Mongoose schema for customer orders & tracking
+│   └── Category.js            # Mongoose schema for departments
+├── controllers/
+│   ├── productController.js    # Multi-faceted search, filter & deals logic
+│   └── orderController.js      # Order creation, inventory deduction & tracking
+├── routes/
+│   ├── products.js            # Express router for /api/products
+│   ├── orders.js              # Express router for /api/orders
+│   └── categories.js          # Express router for /api/categories
+├── seed/
+│   └── seedEcommerce.js       # Database seeder (24 products across 4 departments)
+└── public/
+    ├── index.html             # Amazon/Flipkart style store, modals & Compass inspector
+    ├── order-tracking.html    # Dedicated package tracking page
+    ├── css/
+    │   └── ecommerce.css      # Commercial e-commerce design system
+    └── js/
+        └── ecommerce.js       # Client reactive state, search, cart & Compass polling
 ```
 
-Open your browser at:
-**[http://localhost:3000](http://localhost:3000)**
-
 ---
 
-## Design Philosophy
+## 🎓 Academic Presentation Tips
 
-- **Palette**: Warm gallery beige background (`#EFE8DC`), slightly deeper container beige (`#E6DFD2`), near-black text (`#1A1A1A`), muted umber accent (`#7A7062`), and subtle 1px border lines (`#D8CFBF`).
-- **Typography**: Editorial contrast between `Cormorant Garamond` (high-contrast serif for headings) and `Inter` (clean, legible sans-serif for specifications and body copy).
-- **Proportions**: Authentic 3:4 portrait poster ratio cards, crisp rectangular buttons (no oversized rounded pills), and zero decorative box shadows or blur effects.
-- **Micro-Transitions**: Restrained 220ms ease transitions for opacity and underline accents.
-
----
-
-## Photography Attributions
-
-All imagery is licensed freely for editorial use via Unsplash:
-- **Jonas Jacobsson** — *Quiet Arch No. 3*
-- **Simone Hutsch** — *Geometry of Ascend No. 7*
-- **Federico Respini** — *Fern Study No. 12*
-- **Evie S.** — *Olive Branch Monograph*
-- **Annie Spratt** — *Eucalyptus & Shadow*
-- **Geordanna Cordero** — *Ochre & Mineral Forms*
-- **Europeana** — *Monolith in Silence*
-- **Milad Fakurian** — *Terracotta Equilibrium*
-- **Jeremy Bishop** — *Dune Silence*
-- **Sean Oulashin** — *Coastal Horizon No. 4*
-- **Kalvis Alberts** — *Nordic Ridge Study*
-- **Mika Baumeister** — *Form & Void Bauhaus Study*
-- **Carolin Beck** — *Exhibition Pavilion 1923*
-- **Alina Grubnyak** — *Contour Figure No. 2*
-- **Spacejoy** — *Editorial Interior Room Mockup*
-
----
-
-*Plain Walls — Handcrafted print editions. Fort, Mumbai.*
+- **Show the database**: Highlight how `Product` has nested schemas for `specifications`, `variants`, and `reviews`.
+- **Demonstrate transactions/atomic operations**: Point out how placing an order updates both the `orders` collection and decrements the `stock` in `Product` via `$inc: { stock: -quantity }`.
+- **Use the in-app Compass Inspector**: Click the green `MongoDB: Connected` pill in the header during the demo to show your evaluator the exact connection string and live document counter!

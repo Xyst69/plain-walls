@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Track Your Order — NovaMart E-Commerce</title>
+  <meta name="description" content="Track your NovaMart order delivery status in real-time backed by MongoDB.">
+  <link rel="stylesheet" href="/css/ecommerce.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>📦</text></svg>">
+  <style>
+    .tracking-page-container {
+      max-width: 860px;
+      margin: 40px auto;
+      padding: 0 16px;
+    }
+    .track-search-card {
+      background: #ffffff;
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      margin-bottom: 24px;
+    }
+    .track-input-row {
+      display: flex;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .track-input {
+      flex: 1;
+      padding: 10px 14px;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      font-size: 15px;
+      text-transform: uppercase;
+    }
+    .track-submit-btn {
+      background: var(--accent-amber);
+      color: #000;
+      font-weight: 700;
+      padding: 10px 24px;
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+    }
+    .track-result-card {
+      background: #ffffff;
+      border-radius: var(--radius-md);
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+      display: none;
+    }
+    .timeline-wrap {
+      display: flex;
+      justify-content: space-between;
+      position: relative;
+      margin: 36px 0;
+    }
+    .timeline-wrap::before {
+      content: '';
+      position: absolute;
+      top: 18px;
+      left: 30px;
+      right: 30px;
+      height: 4px;
+      background: #e2e8f0;
+      z-index: 1;
+    }
+    .timeline-step {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      width: 120px;
+    }
+    .step-circle {
+      width: 36px;
+      height: 36px;
+      background: #ffffff;
+      border: 3px solid #cbd5e1;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 8px auto;
+      font-weight: 800;
+      font-size: 14px;
+      color: #64748b;
+    }
+    .timeline-step.done .step-circle {
+      border-color: #10b981;
+      background: #10b981;
+      color: #ffffff;
+    }
+    .step-label {
+      font-size: 12px;
+      font-weight: 700;
+      color: #334155;
+    }
+    .step-date {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top bar -->
+  <aside class="top-notice-bar">
+    <div>⚡ <strong>NovaMart Order Tracking:</strong> Live database lookup from MongoDB <code>ecommerce_db</code></div>
+    <a href="/">Back to Store &rarr;</a>
+  </aside>
+
+  <!-- Navbar -->
+  <header class="main-header">
+    <div class="header-container" style="justify-content: space-between;">
+      <a href="/" class="brand-logo">
+        🛍️ Nova<span class="highlight">Mart</span><span class="dot-in">.in</span>
+      </a>
+      <div style="font-size: 14px; font-weight: 700;">
+        Order Tracking &amp; Delivery Status
+      </div>
+    </div>
+  </header>
+
+  <!-- Page Content -->
+  <main class="tracking-page-container">
+    
+    <div class="track-search-card">
+      <h1 style="font-size: 22px; font-weight: 800; color: #0f172a; margin-bottom: 6px;">Track Your Package</h1>
+      <p style="font-size: 13px; color: #64748b;">
+        Enter your Order ID (e.g. <code>ORD-2026-10492</code>) to check the live tracking status fetched directly from MongoDB.
+      </p>
+
+      <form id="track-form" class="track-input-row" onsubmit="handleTrackOrder(event)">
+        <input 
+          type="text" 
+          id="track-order-input" 
+          class="track-input" 
+          placeholder="Enter Order ID (e.g. ORD-2026-10492)" 
+          required 
+          value="ORD-2026-10492"
+        />
+        <button type="submit" class="track-submit-btn">Track Order</button>
+      </form>
+    </div>
+
+    <!-- Tracking Result -->
+    <div class="track-result-card" id="track-result-card">
+      <div style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid #f1f5f9; padding-bottom: 16px;">
+        <div>
+          <span style="font-size: 12px; color: #64748b; font-weight: 700;">ORDER NUMBER:</span>
+          <h2 style="font-size: 20px; font-weight: 800; color: #0284c7;" id="res-order-id">ORD-2026-XXXXX</h2>
+        </div>
+        <div style="text-align: right;">
+          <span style="font-size: 12px; color: #64748b; font-weight: 700;">CURRENT STATUS:</span>
+          <div style="font-size: 16px; font-weight: 800; color: #16a34a;" id="res-order-status">Confirmed</div>
+        </div>
+      </div>
+
+      <!-- Stepper Timeline -->
+      <div class="timeline-wrap" id="tracking-timeline-wrap">
+        <!-- Rendered via JS -->
+      </div>
+
+      <!-- Details Grid -->
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 24px; padding-top: 16px; border-top: 1px solid #f1f5f9;">
+        <div>
+          <div style="font-weight: 700; font-size: 14px; margin-bottom: 8px;">Delivery Address:</div>
+          <div style="font-size: 13px; color: #334155; line-height: 1.5;" id="res-customer-address">
+            Customer address details...
+          </div>
+        </div>
+        <div>
+          <div style="font-weight: 700; font-size: 14px; margin-bottom: 8px;">Order Summary:</div>
+          <div style="font-size: 13px; color: #334155; line-height: 1.5;">
+            Payment Method: <strong id="res-payment-method">Cash on Delivery</strong><br>
+            Total Paid: <strong id="res-total-amount" style="color: #0f172a; font-size: 16px;">₹0</strong>
+          </div>
+        </div>
+      </div>
+
+      <!-- Ordered Items List -->
+      <div style="margin-top: 24px; border-top: 1px solid #f1f5f9; padding-top: 16px;">
+        <div style="font-weight: 700; font-size: 14px; margin-bottom: 12px;">Items in this Shipment:</div>
+        <div id="res-items-list" style="display: flex; flex-direction: column; gap: 10px;"></div>
+      </div>
+
+      <!-- MongoDB Compass Notice -->
+      <div class="compass-callout-card" style="margin-top: 24px;">
+        <strong>🍃 MongoDB Compass Verification:</strong><br>
+        This tracking info was directly fetched by querying <code>Order.findOne({ orderNumber: ... })</code> in database <code>ecommerce_db</code>. You can open MongoDB Compass and inspect this order document with full schema details!
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    async function handleTrackOrder(e) {
+      e.preventDefault();
+      const orderNum = document.getElementById('track-order-input').value.trim();
+      if (!orderNum) return;
+
+      const card = document.getElementById('track-result-card');
+      card.style.display = 'block';
+      card.innerHTML = '<div style="text-align: center; padding: 40px;">Querying MongoDB for ' + orderNum + '...</div>';
+
+      try {
+        const res = await fetch('/api/orders/' + encodeURIComponent(orderNum));
+        const data = await res.json();
+
+        if (data.success && data.order) {
+          const o = data.order;
+          card.innerHTML = `
+            <div style="display: flex; justify-content: space-between; align-items: baseline; border-bottom: 1px solid #f1f5f9; padding-bottom: 16px;">
+              <div>
+                <span style="font-size: 12px; color: #64748b; font-weight: 700;">ORDER NUMBER:</span>
+                <h2 style="font-size: 20px; font-weight: 800; color: #0284c7;">${o.orderNumber}</h2>
+              </div>
+              <div style="text-align: right;">
+                <span style="font-size: 12px; color: #64748b; font-weight: 700;">CURRENT STATUS:</span>
+                <div style="font-size: 16px; font-weight: 800; color: #16a34a;">${o.orderStatus}</div>
+              </div>
+            </div>
+
+            <div class="timeline-wrap">
+              ${(o.trackingTimeline || [
+                { status: 'Confirmed', label: 'Confirmed', done: true },
+                { status: 'Packed', label: 'Packed', done: true },
+                { status: 'Shipped', label: 'Shipped', done: o.orderStatus === 'Shipped' || o.orderStatus === 'Delivered' },
+                { status: 'Delivered', label: 'Delivered', done: o.orderStatus === 'Delivered' }
+              ]).map(step => `
+                <div class="timeline-step ${step.done ? 'done' : ''}">
+                  <div class="step-circle">${step.done ? '✓' : '○'}</div>
+                  <div class="step-label">${step.label || step.status}</div>
+                  <div class="step-date">${step.timestamp ? new Date(step.timestamp).toLocaleDateString() : 'Pending'}</div>
+                </div>
+              `).join('')}
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 24px; padding-top: 16px; border-top: 1px solid #f1f5f9;">
+              <div>
+                <div style="font-weight: 700; font-size: 14px; margin-bottom: 8px;">Delivery Address:</div>
+                <div style="font-size: 13px; color: #334155; line-height: 1.5;">
+                  <strong>${o.customer.fullName}</strong><br>
+                  ${o.customer.address}, ${o.customer.city}<br>
+                  ${o.customer.state} - ${o.customer.pincode}<br>
+                  Phone: ${o.customer.phone}
+                </div>
+              </div>
+              <div>
+                <div style="font-weight: 700; font-size: 14px; margin-bottom: 8px;">Order Summary:</div>
+                <div style="font-size: 13px; color: #334155; line-height: 1.5;">
+                  Payment Method: <strong style="text-transform: uppercase;">${o.paymentMethod}</strong><br>
+                  Payment Status: <strong>${o.paymentStatus}</strong><br>
+                  Total Paid: <strong style="color: #0f172a; font-size: 18px;">₹${o.pricing.totalAmount.toLocaleString('en-IN')}</strong>
+                </div>
+              </div>
+            </div>
+
+            <div style="margin-top: 24px; border-top: 1px solid #f1f5f9; padding-top: 16px;">
+              <div style="font-weight: 700; font-size: 14px; margin-bottom: 12px;">Items in this Shipment:</div>
+              <div style="display: flex; flex-direction: column; gap: 10px;">
+                ${o.items.map(item => `
+                  <div style="display: flex; gap: 12px; align-items: center; background: #f8fafc; padding: 10px; border-radius: 6px;">
+                    <img src="${item.image}" alt="${item.title}" style="width: 50px; height: 50px; object-fit: cover; border-radius: 4px;" />
+                    <div style="flex: 1;">
+                      <div style="font-size: 13px; font-weight: 600;">${item.title}</div>
+                      <div style="font-size: 11px; color: #64748b;">${item.variant || ''}</div>
+                    </div>
+                    <div style="text-align: right; font-size: 13px; font-weight: 700;">
+                      ₹${item.price.toLocaleString('en-IN')} × ${item.quantity}
+                    </div>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+
+            <div class="compass-callout-card" style="margin-top: 24px;">
+              <strong>🍃 MongoDB Compass Live Sync:</strong><br>
+              Order Document ID: <code>${o._id}</code><br>
+              Database: <code>ecommerce_db</code> &rarr; Collection: <code>orders</code>.
+            </div>
+          `;
+        } else {
+          card.innerHTML = `
+            <div style="text-align: center; padding: 32px; color: #dc2626;">
+              <h3>Order Not Found</h3>
+              <p style="color: #64748b; font-size: 13px; margin-top: 6px;">
+                Could not find an order matching "${orderNum}". Please verify your Order ID and try again.
+              </p>
+            </div>
+          `;
+        }
+      } catch (err) {
+        card.innerHTML = '<div style="color: red; padding: 20px;">Error communicating with server.</div>';
+      }
+    }
+
+    // Auto trigger on page load if default value present
+    window.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('track-form').dispatchEvent(new Event('submit'));
+    });
+  </script>
+</body>
+</html>

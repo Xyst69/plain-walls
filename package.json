@@ -1,12 +1,12 @@
 {
-  "name": "plain-walls",
-  "version": "1.0.0",
-  "description": "A minimalist online shop for laminated posters and framed prints for home decor",
+  "name": "novamart-ecommerce",
+  "version": "2.0.0",
+  "description": "NovaMart — Full-Stack E-Commerce Platform with Live MongoDB & Compass Integration",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "node --watch server.js",
-    "seed": "node seed/seed.js"
+    "seed": "node seed/seedEcommerce.js"
   },
   "keywords": [],
   "author": "",

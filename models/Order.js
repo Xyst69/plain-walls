@@ -1,90 +1,95 @@
 /**
  * models/Order.js
- * Mongoose schema and model for customer orders / checkout enquiries
+ * Mongoose Schema for Customer Orders (NovaMart)
+ * Stored in MongoDB: ecommerce_db -> orders collection
+ * Visible in MongoDB Compass!
  */
 
 const mongoose = require('mongoose');
 
-const orderItemSchema = new mongoose.Schema(
-  {
-    posterId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Poster',
-      required: [true, 'Poster ID is required']
-    },
-    title: {
-      type: String,
-      required: [true, 'Poster title is required'],
-      trim: true
-    },
-    size: {
-      type: String,
-      required: [true, 'Size is required (A4, A3, A2)'],
-      enum: ['A4', 'A3', 'A2']
-    },
-    quantity: {
-      type: Number,
-      required: [true, 'Quantity is required'],
-      min: [1, 'Quantity must be at least 1']
-    },
-    price: {
-      type: Number,
-      required: [true, 'Unit price is required'],
-      min: [0, 'Unit price must be positive']
-    }
+const orderItemSchema = new mongoose.Schema({
+  productId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Product'
   },
-  { _id: false }
-);
+  title: { type: String, required: true },
+  brand: { type: String, default: '' },
+  image: { type: String, default: '' },
+  price: { type: Number, required: true },
+  quantity: { type: Number, required: true, min: 1 },
+  variant: { type: String, default: '' },
+  itemTotal: { type: Number, required: true }
+}, { _id: false });
+
+const customerSchema = new mongoose.Schema({
+  fullName: { type: String, required: true, trim: true },
+  email: { type: String, required: true, trim: true, lowercase: true },
+  phone: { type: String, required: true, trim: true },
+  address: { type: String, required: true, trim: true },
+  city: { type: String, required: true, trim: true },
+  state: { type: String, required: true, trim: true },
+  pincode: { type: String, required: true, trim: true }
+}, { _id: false });
+
+const orderPricingSchema = new mongoose.Schema({
+  subtotal: { type: Number, required: true },
+  discount: { type: Number, default: 0 },
+  couponCode: { type: String, default: '' },
+  deliveryFee: { type: Number, default: 0 },
+  totalAmount: { type: Number, required: true }
+}, { _id: false });
+
+const trackingStepSchema = new mongoose.Schema({
+  status: { type: String, required: true },
+  label: { type: String, required: true },
+  timestamp: { type: Date, default: Date.now },
+  done: { type: Boolean, default: false }
+}, { _id: false });
 
 const orderSchema = new mongoose.Schema({
-  customerName: {
+  orderNumber: {
     type: String,
-    required: [true, 'Customer name is required'],
-    trim: true
+    required: true,
+    unique: true,
+    index: true
   },
-  email: {
-    type: String,
-    required: [true, 'Customer email is required'],
-    trim: true,
-    lowercase: true,
-    match: [/^\S+@\S+\.\S+$/, 'Please provide a valid email address']
-  },
-  phone: {
-    type: String,
-    required: [true, 'Contact phone number is required'],
-    trim: true
-  },
-  address: {
-    type: String,
-    required: [true, 'Shipping address is required'],
-    trim: true
+  customer: {
+    type: customerSchema,
+    required: true
   },
   items: {
     type: [orderItemSchema],
-    required: [true, 'Order must contain at least one item'],
-    validate: {
-      validator: function (v) {
-        return Array.isArray(v) && v.length > 0;
-      },
-      message: 'Order items cannot be empty'
-    }
+    required: true,
+    validate: [val => val.length > 0, 'An order must contain at least one item']
   },
-  total: {
-    type: Number,
-    required: [true, 'Total order amount is required'],
-    min: [0, 'Total must be positive']
+  pricing: {
+    type: orderPricingSchema,
+    required: true
   },
-  status: {
+  paymentMethod: {
     type: String,
-    enum: {
-      values: ['pending', 'confirmed', 'shipped'],
-      message: '{VALUE} is not a valid order status'
-    },
-    default: 'pending'
+    enum: ['cod', 'upi', 'card'],
+    default: 'cod'
   },
+  paymentStatus: {
+    type: String,
+    enum: ['Pending', 'Completed', 'Failed'],
+    default: 'Pending'
+  },
+  orderStatus: {
+    type: String,
+    enum: ['Confirmed', 'Processing', 'Shipped', 'Delivered', 'Cancelled'],
+    default: 'Confirmed'
+  },
+  estimatedDeliveryDate: {
+    type: Date,
+    default: () => new Date(Date.now() + 3 * 24 * 60 * 60 * 1000) // 3 days from now
+  },
+  trackingTimeline: [trackingStepSchema],
   createdAt: {
     type: Date,
-    default: Date.now
+    default: Date.now,
+    index: true
   }
 });
 

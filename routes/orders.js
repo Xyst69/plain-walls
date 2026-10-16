@@ -1,27 +1,21 @@
 /**
  * routes/orders.js
- * Express router for customer orders and admin order inspection
+ * Express routes for /api/orders
  */
 
 const express = require('express');
 const router = express.Router();
 const {
   createOrder,
-  getOrders,
-  updateOrderStatus,
-  deleteOrder
+  getOrderDetails,
+  getAllOrders,
+  updateOrderStatus
 } = require('../controllers/orderController.js');
 
-// POST /api/orders - Submit customer checkout enquiry/order
+// Order routes
 router.post('/', createOrder);
-
-// GET /api/orders - Administrative order list
-router.get('/', getOrders);
-
-// PUT /api/orders/:id - Update order status in MongoDB
-router.put('/:id', updateOrderStatus);
-
-// DELETE /api/orders/:id - Delete order from MongoDB
-router.delete('/:id', deleteOrder);
+router.get('/', getAllOrders);
+router.get('/:orderNumber', getOrderDetails);
+router.put('/:orderNumber/status', updateOrderStatus);
 
 module.exports = router;

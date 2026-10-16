@@ -3,144 +3,583 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Plain Walls — Minimalist Laminated Art & Prints</title>
-  <meta name="description" content="A curated collection of quiet, laminated posters and framed prints designed to bring architectural stillness to everyday spaces.">
-  <link rel="stylesheet" href="./css/style.css">
+  <title>NovaMart — Online Shopping for Tech, Fashion, Home & Gaming</title>
+  <meta name="description" content="Shop millions of products at NovaMart: Electronics, Fashion, Home & Kitchen, and Gaming with fast delivery, unbeatable discounts, and live MongoDB integration.">
+  <link rel="stylesheet" href="/css/ecommerce.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛍️</text></svg>">
 </head>
 <body>
 
-  <!-- Minimal Editorial Navigation -->
-  <header class="site-header">
-    <div class="container">
-      <nav class="site-nav" aria-label="Main Navigation">
-        <a href="./index.html" class="brand-logo" id="brandLogo">Plain Walls</a>
-        <ul class="nav-links">
-          <li><a href="./shop.html" class="nav-link" id="navShop">Collection</a></li>
-          <li><a href="./about.html" class="nav-link" id="navAbout">Studio & Notes</a></li>
-          <li>
-            <a href="./cart.html" class="nav-link" id="navCart">
-              Cart <span class="cart-count-badge" id="cartCountBadge">(0)</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
+  <!-- Top Notification Bar & MongoDB Compass Live Indicator -->
+  <aside class="top-notice-bar" aria-label="System status bar">
+    <div>
+      ⚡ <strong>FESTIVE SALE LIVE:</strong> Use code <span style="color: #fbbf24; font-weight: 700;">SAVE10</span> for 10% instant discount on all orders!
     </div>
+    <div style="display: flex; align-items: center; gap: 12px;">
+      <a href="/tracking">Track Order</a>
+      <div class="compass-pill" id="compass-live-pill" title="Click to open MongoDB Compass Live Inspector">
+        <div class="pulse-dot"></div>
+        <span id="compass-status-text">MongoDB: Connected</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Main Commercial Sticky Header (Amazon / Flipkart Style) -->
+  <header class="main-header" role="banner">
+    <div class="header-container">
+      
+      <!-- Brand Logo -->
+      <a href="/" class="brand-logo" aria-label="NovaMart Homepage">
+        🛍️ Nova<span class="highlight">Mart</span><span class="dot-in">.in</span>
+      </a>
+
+      <!-- Location Picker -->
+      <div class="location-picker" onclick="showToast('Delivery available across India (Pincode: 400001)', 'success')">
+        <span style="font-size: 18px;">📍</span>
+        <div class="loc-text">
+          <span class="loc-sub">Deliver to</span>
+          <span class="loc-main">Mumbai 400001</span>
+        </div>
+      </div>
+
+      <!-- Universal Search Bar -->
+      <div class="header-search-wrap">
+        <select class="search-category-select" id="search-category" aria-label="Select search category">
+          <option value="All">All Departments</option>
+          <option value="Electronics">Electronics</option>
+          <option value="Fashion">Fashion</option>
+          <option value="Home & Kitchen">Home & Kitchen</option>
+          <option value="Gaming">Gaming</option>
+        </select>
+        <input 
+          type="text" 
+          id="search-input" 
+          class="search-input" 
+          placeholder="Search NovaMart products, brands (Sony, Nike, Apple, Bose...)" 
+          aria-label="Search products"
+        />
+        <button class="search-submit-btn" id="search-submit" aria-label="Submit search">
+          🔍
+        </button>
+      </div>
+
+      <!-- Header Actions -->
+      <div class="header-actions">
+        <a href="/tracking" class="header-action-btn">
+          <span class="action-sub">Returns</span>
+          <span class="action-main">& Orders</span>
+        </a>
+
+        <!-- Cart Button -->
+        <div class="cart-btn-header" id="header-cart-btn" aria-label="View Shopping Cart">
+          <div class="cart-icon-wrap">
+            🛒
+            <span class="cart-badge" id="cart-badge-count">0</span>
+          </div>
+          <span class="action-main">Cart</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Sub-Navbar Category Strip -->
+    <nav class="sub-navbar" role="navigation" aria-label="Category navigation">
+      <div class="sub-nav-item active" data-category="All">☰ All Categories</div>
+      <div class="sub-nav-item" data-category="Electronics">⚡ Electronics</div>
+      <div class="sub-nav-item" data-category="Fashion">👟 Fashion</div>
+      <div class="sub-nav-item" data-category="Home & Kitchen">☕ Home & Kitchen</div>
+      <div class="sub-nav-item" data-category="Gaming">🎮 Gaming</div>
+      <div class="sub-nav-item highlight-deal" onclick="selectCategory('All')">🔥 Today's Deals</div>
+      <div class="sub-nav-item" onclick="openCompassModal()">🗄️ MongoDB Compass View</div>
+      <div class="sub-nav-item" onclick="window.location.href='/tracking'">📦 Order Tracker</div>
+    </nav>
   </header>
 
-  <main>
-    <!-- Editorial Hero Section -->
-    <section class="hero-section">
-      <div class="container">
-        <div class="hero-layout">
-          <div class="hero-image-wrap">
-            <img 
-              src="./images/hero-editorial-interior.jpg" 
-              alt="Framed minimalist art print hung in a quiet, sunlit interior with neutral tones" 
-              class="hero-image"
-              loading="eager"
-            />
-          </div>
-          <div class="hero-copy">
-            <span class="label-caps">Print Workshop & Curated Editions</span>
-            <h1 class="hero-title">Quiet forms for living spaces.</h1>
-            <p class="hero-description">
-              We design and produce archival prints sealed in subtle thermal lamination. Resilient, non-reflective, and made to outlive passing trends.
-            </p>
-            <div class="hero-actions">
-              <a href="./shop.html" class="btn btn-primary" id="heroShopBtn">Browse Collection</a>
-              <a href="./about.html" class="btn btn-outline" id="heroAboutBtn">Our Process</a>
-            </div>
-          </div>
+  <!-- Hero Promotional Slider Carousel -->
+  <section class="hero-slider-section" aria-label="Promotional Banners">
+    <div class="hero-slide active">
+      <div class="hero-content">
+        <span class="hero-tag">Tech Carnival 2026</span>
+        <h1 class="hero-title">Upgrade Your World with Flagship Tech</h1>
+        <p class="hero-desc">Noise-cancelling headphones, M3 MacBooks, and OLED Smart TVs with up to 40% instant off and next-day delivery.</p>
+        <button class="hero-cta" onclick="selectCategory('Electronics')">Shop Electronics Deals &rarr;</button>
+      </div>
+      <div class="hero-img-wrap">
+        <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80" alt="Tech deals" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Deal of the Day Live Countdown Ticker -->
+  <div class="deal-ticker-bar">
+    <div class="deal-ticker-card">
+      <div class="deal-info-left">
+        <span class="deal-badge-pill">DEAL OF THE DAY</span>
+        <div>
+          <div class="deal-heading" id="ticker-deal-title">Sony WH-1000XM5 Wireless Headphones</div>
+          <div style="font-size: 13px; color: #16a34a; font-weight: 700;" id="ticker-deal-price">₹26,990 (Save 23%)</div>
         </div>
       </div>
-    </section>
+      <div class="deal-countdown">
+        <span>⚡ Ends in:</span>
+        <div class="timer-box" id="ticker-deal-timer">03h : 58m : 40s</div>
+      </div>
+    </div>
+  </div>
 
-    <!-- Curated Featured Prints Grid -->
-    <section class="featured-section">
-      <div class="container">
-        <div class="section-header">
-          <div>
-            <span class="label-caps">Featured Edition</span>
-            <h2 class="section-title">Selected Works</h2>
-          </div>
-          <a href="./shop.html" class="btn-text" id="viewAllPrintsLink">View All Prints →</a>
-        </div>
+  <!-- 4 Category Quick Discovery Tiles -->
+  <section class="category-tiles-section" aria-label="Featured Categories">
+    <div class="tiles-grid" id="category-tiles-grid">
+      <!-- Populated via JavaScript -->
+    </div>
+  </section>
 
-        <div class="poster-grid" id="featuredGrid">
-          <!-- Dynamically populated by home.js via GET /api/posters?featured=true -->
+  <!-- Main Store Container: Sidebar Filters + Products Grid -->
+  <main class="store-container" role="main">
+    
+    <!-- Left Filter Sidebar -->
+    <aside class="filter-sidebar" aria-label="Product filters">
+      
+      <!-- Category Filter -->
+      <div class="filter-section">
+        <div class="filter-title">Category</div>
+        <ul class="filter-list" id="sidebar-categories-list">
+          <!-- Populated via JS -->
+        </ul>
+      </div>
+
+      <!-- Price Filter -->
+      <div class="filter-section">
+        <div class="filter-title">Price Range (₹)</div>
+        <div class="price-inputs">
+          <input type="number" id="price-min" placeholder="Min" min="0" />
+          <span style="color: #94a3b8;">-</span>
+          <input type="number" id="price-max" placeholder="Max" min="0" />
+          <button class="price-go-btn" id="apply-price-btn">Go</button>
         </div>
       </div>
-    </section>
 
-    <!-- Process: How It's Made Strip -->
-    <section class="process-section">
-      <div class="container">
-        <div class="process-header">
-          <span class="label-caps">Methodology</span>
-          <h2 style="font-size: 2rem; margin-top: 4px;">How Each Piece Is Made</h2>
+      <!-- Customer Reviews Rating Filter -->
+      <div class="filter-section">
+        <div class="filter-title">Customer Reviews</div>
+        <ul class="filter-list">
+          <li class="rating-filter-item" data-rating="4.8">
+            <span class="rating-stars">★★★★☆</span>
+            <span style="font-size: 12px; color: #475569;">4.8 & above</span>
+          </li>
+          <li class="rating-filter-item" data-rating="4.5">
+            <span class="rating-stars">★★★★☆</span>
+            <span style="font-size: 12px; color: #475569;">4.5 & above</span>
+          </li>
+          <li class="rating-filter-item" data-rating="4.0">
+            <span class="rating-stars">★★★★☆</span>
+            <span style="font-size: 12px; color: #475569;">4.0 & above</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Compass Info Box in Sidebar -->
+      <div class="filter-section" style="border-bottom: none; background: #f8fafc; padding: 12px; border-radius: 6px;">
+        <div style="font-weight: 700; font-size: 12px; color: #0f172a; margin-bottom: 4px;">MongoDB Compass Sync</div>
+        <p style="font-size: 11px; color: #64748b; line-height: 1.4; margin-bottom: 8px;">
+          All orders are stored in collection <code>orders</code> in <code>ecommerce_db</code>.
+        </p>
+        <button class="price-go-btn" style="width: 100%; font-size: 11px; padding: 6px;" onclick="openCompassModal()">
+          Open Compass Inspector
+        </button>
+      </div>
+
+      <!-- Reset Filters Button -->
+      <button class="clear-filters-btn" onclick="resetFilters()">Reset All Filters</button>
+
+    </aside>
+
+    <!-- Product Catalog Area -->
+    <section class="catalog-content">
+      
+      <!-- Catalog Header Bar -->
+      <div class="catalog-header">
+        <div class="results-info">
+          Showing <span class="results-count" id="results-count">24 items</span>
         </div>
-        <div class="process-grid">
-          <div class="process-step">
-            <span class="process-step-num">01 / PRINT</span>
-            <h3 class="process-step-title">300gsm Archival Stock</h3>
-            <p class="process-step-desc">
-              Giclée reproduction utilizing mineral-based pigment inks for deep blacks, smooth tonal gradations, and enduring lightfastness.
-            </p>
-          </div>
-          <div class="process-step">
-            <span class="process-step-num">02 / LAMINATE</span>
-            <h3 class="process-step-title">Thermal Protective Seal</h3>
-            <p class="process-step-desc">
-              Every print is thermally sealed in a velvet matte or satin lamination layer, guarding against fingerprints, moisture, and UV fade without heavy glass glare.
-            </p>
-          </div>
-          <div class="process-step">
-            <span class="process-step-num">03 / DELIVER</span>
-            <h3 class="process-step-title">Rigid Tube Dispatch</h3>
-            <p class="process-step-desc">
-              Hand-rolled in acid-free tissue paper and shipped in heavy-gauge zero-crush cylinders with complimentary tracking nationwide.
-            </p>
-          </div>
+        <div class="sort-wrap">
+          <label for="sort-select">Sort by:</label>
+          <select id="sort-select" class="sort-select">
+            <option value="featured">Featured Deals</option>
+            <option value="price-asc">Price: Low to High</option>
+            <option value="price-desc">Price: High to Low</option>
+            <option value="rating">Avg. Customer Review</option>
+            <option value="discount">Biggest Discount</option>
+            <option value="newest">Newest Arrivals</option>
+          </select>
         </div>
       </div>
+
+      <!-- Products Grid -->
+      <div class="products-grid" id="products-grid">
+        <!-- Injected via JavaScript -->
+      </div>
+
     </section>
+
   </main>
 
-  <!-- Editorial Footer -->
-  <footer class="site-footer">
-    <div class="container">
-      <div class="footer-grid">
+  <!-- =========================================================================
+       MODALS & SLIDE-OUT DRAWERS
+       ========================================================================= -->
+
+  <!-- 1. PRODUCT DETAIL MODAL -->
+  <div class="modal-backdrop" id="product-detail-modal-backdrop">
+    <div class="product-detail-modal">
+      <button class="modal-close-btn" onclick="closeProductModal()" aria-label="Close modal">✕</button>
+      
+      <div class="modal-grid">
+        <!-- Left: Image Gallery -->
         <div>
-          <h3 class="footer-brand-title">Plain Walls</h3>
-          <p class="footer-desc">
-            An independent print studio focused on restraint, balanced proportions, and tactile paper goods for calm interiors.
-          </p>
+          <div class="modal-gallery-main">
+            <img id="modal-main-img" src="" alt="Product Large View" />
+          </div>
+          <div class="modal-thumbnails" id="modal-thumbs-container">
+            <!-- Thumbnails injected via JS -->
+          </div>
         </div>
-        <div>
-          <div class="footer-col-title">Navigation</div>
-          <ul class="footer-list">
-            <li><a href="./shop.html">Full Catalog</a></li>
-            <li><a href="./about.html">Studio & Craft</a></li>
-            <li><a href="./cart.html">Shopping Cart</a></li>
-          </ul>
-        </div>
-        <div>
-          <div class="footer-col-title">Workshop</div>
-          <p style="font-size: 0.8125rem; color: var(--text-muted); line-height: 1.6;">
-            Fort Art District, Mumbai<br>
-            Dispatched across India<br>
-            Mon – Fri, 10:00 – 18:00 IST
-          </p>
+
+        <!-- Right: Product Details -->
+        <div class="modal-details-right">
+          <div class="modal-brand" id="modal-product-brand">BRAND</div>
+          <h2 class="modal-title" id="modal-product-title">Product Title</h2>
+          
+          <div class="product-rating-row" style="margin-bottom: 12px;">
+            <span class="rating-badge" id="modal-product-rating">4.8 ★</span>
+            <span class="review-count-text" id="modal-product-reviews">(1,240 ratings)</span>
+          </div>
+
+          <!-- Price Box -->
+          <div class="modal-price-box">
+            <div style="display: flex; align-items: baseline; gap: 10px;">
+              <span class="selling-price" style="font-size: 26px;" id="modal-selling-price">₹0</span>
+              <span class="original-price" id="modal-original-price">M.R.P.: ₹0</span>
+              <span class="discount-tag" id="modal-discount-tag">0% OFF</span>
+            </div>
+            <div style="font-size: 12px; color: #475569; margin-top: 4px;">Inclusive of all taxes. Free 1-Day Delivery available.</div>
+          </div>
+
+          <!-- Variants Picker -->
+          <div id="modal-variants-container"></div>
+
+          <!-- Highlights -->
+          <div style="margin-bottom: 16px;">
+            <div style="font-weight: 700; font-size: 13px; margin-bottom: 6px;">Key Highlights:</div>
+            <ul id="modal-highlights-list" style="padding-left: 20px; font-size: 13px; color: #334155; line-height: 1.5;"></ul>
+          </div>
+
+          <!-- Specs Table -->
+          <div style="margin-bottom: 16px;">
+            <div style="font-weight: 700; font-size: 13px; margin-bottom: 6px;">Technical Specifications:</div>
+            <table class="specs-table">
+              <tbody id="modal-specs-tbody"></tbody>
+            </table>
+          </div>
+
+          <!-- Description -->
+          <div style="font-size: 13px; color: #475569; margin-bottom: 20px; line-height: 1.5;" id="modal-description"></div>
+
+          <!-- CTAs -->
+          <div class="modal-cta-row">
+            <button class="btn-add-cart" id="modal-btn-add-cart" style="padding: 12px;">Add to Cart</button>
+            <button class="btn-buy-now" id="modal-btn-buy-now">Buy Now</button>
+          </div>
+
+          <!-- Customer Reviews Section -->
+          <div style="margin-top: 28px; border-top: 1px solid #e2e8f0; padding-top: 16px;">
+            <div style="font-weight: 800; font-size: 16px; margin-bottom: 12px;">Verified Customer Reviews</div>
+            <div id="modal-reviews-list"></div>
+          </div>
+
         </div>
       </div>
-      <div class="footer-bottom">
-        <span>© 2026 Plain Walls Print Workshop. All rights reserved.</span>
-        <span>Built with Node.js, Express & MongoDB</span>
+    </div>
+  </div>
+
+  <!-- 2. SHOPPING CART SLIDE-OUT DRAWER -->
+  <div class="cart-drawer-backdrop" id="cart-drawer-backdrop"></div>
+  <div class="cart-drawer" id="cart-drawer">
+    <div class="cart-drawer-header">
+      <h3>Your Shopping Cart</h3>
+      <button class="cart-drawer-close" id="cart-drawer-close">✕</button>
+    </div>
+
+    <!-- Line Items List -->
+    <div class="cart-items-list" id="cart-items-container">
+      <!-- Injected via JS -->
+    </div>
+
+    <!-- Drawer Footer -->
+    <div class="cart-drawer-footer">
+      <div class="coupon-row">
+        <input type="text" id="coupon-input" class="coupon-input" placeholder="Coupon (e.g. SAVE10)" />
+        <button class="coupon-btn" id="apply-coupon-btn">Apply</button>
       </div>
+
+      <div class="cart-summary-line">
+        <span>Subtotal</span>
+        <span id="cart-subtotal">₹0</span>
+      </div>
+      <div class="cart-summary-line" style="color: #16a34a;">
+        <span>Coupon Savings</span>
+        <span id="cart-discount">-₹0</span>
+      </div>
+      <div class="cart-summary-line">
+        <span>Delivery Charge</span>
+        <span id="cart-delivery">FREE</span>
+      </div>
+      <div class="cart-total-line">
+        <span>Total Payable:</span>
+        <span id="cart-total">₹0</span>
+      </div>
+
+      <button class="btn-checkout-drawer" id="btn-checkout-drawer">
+        Proceed to Checkout &rarr;
+      </button>
+    </div>
+  </div>
+
+  <!-- 3. CHECKOUT MODAL -->
+  <div class="modal-backdrop" id="checkout-modal-backdrop">
+    <div class="checkout-modal">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+        <h2 class="checkout-heading" style="margin-bottom: 0;">Complete Your Order</h2>
+        <button class="modal-close-btn" onclick="closeCheckoutModal()" style="position: static;">✕</button>
+      </div>
+
+      <form id="checkout-form">
+        <div style="font-weight: 700; font-size: 14px; margin-bottom: 10px; color: #0f172a;">1. Shipping Address</div>
+        <div class="form-group-grid">
+          <div class="form-field full">
+            <label for="cust-name">Full Name *</label>
+            <input type="text" id="cust-name" required value="Aditya Verma" />
+          </div>
+          <div class="form-field">
+            <label for="cust-phone">Mobile Phone (10-digit) *</label>
+            <input type="tel" id="cust-phone" required value="+91 98201 54321" />
+          </div>
+          <div class="form-field">
+            <label for="cust-email">Email Address *</label>
+            <input type="email" id="cust-email" required value="aditya.verma@example.com" />
+          </div>
+          <div class="form-field full">
+            <label for="cust-address">Street Address / Flat / Building *</label>
+            <input type="text" id="cust-address" required value="402, High Point Towers, Senapati Bapat Marg" />
+          </div>
+          <div class="form-field">
+            <label for="cust-city">City *</label>
+            <input type="text" id="cust-city" required value="Mumbai" />
+          </div>
+          <div class="form-field">
+            <label for="cust-state">State *</label>
+            <input type="text" id="cust-state" required value="Maharashtra" />
+          </div>
+          <div class="form-field full">
+            <label for="cust-pincode">Pincode *</label>
+            <input type="text" id="cust-pincode" required value="400013" />
+          </div>
+        </div>
+
+        <div style="font-weight: 700; font-size: 14px; margin: 16px 0 10px 0; color: #0f172a;">2. Payment Method</div>
+        <div class="payment-options-grid">
+          <div class="payment-card-opt selected" data-method="cod">
+            <div style="font-size: 22px;">💵</div>
+            <div class="pay-title">Cash on Delivery</div>
+            <div style="font-size: 11px; color: #64748b;">Pay at doorstep</div>
+          </div>
+          <div class="payment-card-opt" data-method="upi">
+            <div style="font-size: 22px;">📱</div>
+            <div class="pay-title">UPI / QR Code</div>
+            <div style="font-size: 11px; color: #64748b;">Instant Demo</div>
+          </div>
+          <div class="payment-card-opt" data-method="card">
+            <div style="font-size: 22px;">💳</div>
+            <div class="pay-title">Credit / Debit Card</div>
+            <div style="font-size: 11px; color: #64748b;">Secure 256-bit</div>
+          </div>
+        </div>
+
+        <div style="background: #f8fafc; padding: 14px; border-radius: 8px; margin: 16px 0; display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 14px; font-weight: 700;">Total Payable:</span>
+          <span id="checkout-pay-total" style="font-size: 22px; font-weight: 800; color: #0f172a;">₹0</span>
+        </div>
+
+        <button type="submit" class="btn-checkout-drawer" id="btn-place-order" style="padding: 14px;">
+          Place Your Order (Saves to MongoDB)
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- 4. ORDER CONFIRMATION / SUCCESS MODAL -->
+  <div class="modal-backdrop" id="success-modal-backdrop">
+    <div class="checkout-modal" style="max-width: 580px;">
+      <div class="order-success-box">
+        <div class="success-check-icon">✓</div>
+        <h2 style="font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 6px;">Order Placed Successfully!</h2>
+        <p style="color: #64748b; font-size: 14px;">A new order document has been generated and saved to MongoDB.</p>
+        
+        <div class="success-order-id" id="success-order-num">ORD-2026-XXXXX</div>
+        
+        <div style="font-size: 14px; color: #334155; margin-bottom: 12px;">
+          Amount Paid: <strong id="success-order-total" style="color: #0f172a;">₹0</strong><br>
+          Delivery to: <span id="success-order-cust">Customer</span>
+        </div>
+
+        <!-- MongoDB Compass Callout for Evaluation -->
+        <div class="compass-callout-card">
+          <div style="font-weight: 800; margin-bottom: 6px; display: flex; align-items: center; gap: 6px;">
+            <div class="pulse-dot"></div> Live MongoDB Compass Verification:
+          </div>
+          <p style="margin-bottom: 6px;">
+            1. Open <strong>MongoDB Compass</strong> and connect to: <code>mongodb://localhost:27017</code>
+          </p>
+          <p style="margin-bottom: 6px;">
+            2. Open database: <strong>ecommerce_db</strong> &rarr; collection: <strong>orders</strong>
+          </p>
+          <p>
+            3. You will see this new order document with your customer details, cart items, and timestamps!
+          </p>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 16px;">
+          <button class="btn-quick-view" style="flex: 1; padding: 12px;" onclick="window.location.href='/tracking'">
+            Track Live Status
+          </button>
+          <button class="price-go-btn" style="flex: 1; padding: 12px;" onclick="closeSuccessModal()">
+            Continue Shopping
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. MONGODB COMPASS LIVE INSPECTOR MODAL -->
+  <div class="modal-backdrop" id="compass-modal-backdrop">
+    <div class="compass-inspector-modal">
+      <div class="compass-header">
+        <div class="compass-logo-icon">🍃</div>
+        <div>
+          <h2 style="font-size: 20px; font-weight: 800; color: #0f172a;">MongoDB Compass Live Inspector</h2>
+          <div style="font-size: 12px; color: #64748b;">Academic Assignment & Database Evaluation Console</div>
+        </div>
+        <button class="modal-close-btn" id="compass-modal-close" style="position: static; margin-left: auto;">✕</button>
+      </div>
+
+      <div class="uri-copy-box">
+        <span>mongodb://localhost:27017</span>
+        <button class="btn-copy-uri" id="btn-copy-compass-uri">Copy Connection String</button>
+      </div>
+
+      <div class="compass-metrics-grid">
+        <div class="metric-card">
+          <div class="metric-number" id="metric-products-count">24</div>
+          <div class="metric-label">Products in MongoDB</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-number" id="metric-orders-count">0</div>
+          <div class="metric-label">Customer Orders Placed</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-number" id="metric-categories-count">4</div>
+          <div class="metric-label">Active Categories</div>
+        </div>
+      </div>
+
+      <div class="steps-list">
+        <strong>📋 How to verify in MongoDB Compass during evaluation:</strong>
+        <ol>
+          <li>Launch the <strong>MongoDB Compass</strong> desktop application.</li>
+          <li>In the connection bar, enter <code>mongodb://localhost:27017</code> and click <strong>Connect</strong>.</li>
+          <li>In the left sidebar, click on database <strong>ecommerce_db</strong>.</li>
+          <li>Click the <strong>products</strong> collection to see all 24 curated tech & fashion items.</li>
+          <li>Click the <strong>orders</strong> collection to see all live orders placed through the website in real time!</li>
+        </ol>
+      </div>
+
+      <div style="font-weight: 800; font-size: 15px; margin-bottom: 10px; color: #0f172a;">
+        Recent Orders Stored in MongoDB:
+      </div>
+      <table class="specs-table" style="background: #fff; border: 1px solid #e2e8f0; border-radius: 6px;">
+        <thead>
+          <tr style="background: #f8fafc; text-align: left; font-size: 12px;">
+            <th style="padding: 8px;">Order #</th>
+            <th style="padding: 8px;">Customer</th>
+            <th style="padding: 8px;">Amount</th>
+            <th style="padding: 8px;">Status</th>
+          </tr>
+        </thead>
+        <tbody id="compass-recent-orders-list">
+          <!-- Injected via JS -->
+        </tbody>
+      </table>
+
+      <div style="text-align: right; margin-top: 16px;">
+        <button class="btn-quick-view" onclick="closeCompassModal()">Close Inspector</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Main Amazon-Style Footer -->
+  <footer class="main-footer" role="contentinfo">
+    <div class="back-to-top-btn" onclick="window.scrollTo({ top: 0, behavior: 'smooth' })">
+      ▲ Back to top
+    </div>
+
+    <div class="footer-columns-wrap">
+      <div class="footer-col">
+        <h4>Get to Know Us</h4>
+        <ul>
+          <li><a href="#about">About NovaMart</a></li>
+          <li><a href="#careers">Careers</a></li>
+          <li><a href="#press">Press Releases</a></li>
+          <li><a href="#science">Nova Science</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Connect with Us</h4>
+        <ul>
+          <li><a href="#facebook">Facebook</a></li>
+          <li><a href="#twitter">Twitter (X)</a></li>
+          <li><a href="#instagram">Instagram</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Make Money with Us</h4>
+        <ul>
+          <li><a href="#sell">Sell on NovaMart</a></li>
+          <li><a href="#affiliate">Affiliate Marketing</a></li>
+          <li><a href="#fulfillment">Fulfillment by NovaMart</a></li>
+          <li><a href="#advertise">Advertise Your Products</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Let Us Help You</h4>
+        <ul>
+          <li><a href="/tracking">Track Your Orders</a></li>
+          <li><a href="#returns">Returns & Replacements</a></li>
+          <li><a href="#help">100% Purchase Protection</a></li>
+          <li><a href="javascript:void(0)" onclick="openCompassModal()">MongoDB Compass Status</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom-bar">
+      &copy; 2026 NovaMart E-Commerce Platform. Built with Express.js &amp; MongoDB Mongoose. Configured for MongoDB Compass Live Evaluation.
     </div>
   </footer>
 
-  <script src="./js/api.js"></script>
-  <script src="./js/home.js"></script>
+  <script src="/js/ecommerce.js"></script>
 </body>
 </html>
